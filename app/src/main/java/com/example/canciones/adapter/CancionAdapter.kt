@@ -13,7 +13,8 @@ import com.example.canciones.models.Cancion
 
 class CancionAdapter(
     private var lista: MutableList<Cancion>,
-    private val onDelete: (Int) -> Unit
+    private val onDelete: (Int) -> Unit,
+    private val onEdit: (Int) -> Unit
 ) : RecyclerView.Adapter<CancionAdapter.CancionVH>() {
 
     inner class CancionVH(v: View) : RecyclerView.ViewHolder(v) {
@@ -23,22 +24,18 @@ class CancionAdapter(
         val album: TextView = v.findViewById(R.id.txtAlbum)
         val duracion: TextView = v.findViewById(R.id.txtDuracion)
         val btnDelete: Button = v.findViewById(R.id.btnDelete)
+        val btnEdit: Button = v.findViewById(R.id.btnEdit)
 
         fun render(c: Cancion) {
             // Carga la imagen con Glide
-            Glide.with(itemView.context)
-                .load(c.imagen)
-                .into(img)
-
+            Glide.with(itemView.context).load(c.imagen).into(img)
             titulo.text = c.titulo
             autor.text = c.autor
             album.text = c.album
             duracion.text = c.duracion
 
-
-            btnDelete.setOnClickListener {
-                onDelete(adapterPosition)
-            }
+            btnDelete.setOnClickListener { onDelete(adapterPosition) }
+            btnEdit.setOnClickListener { onEdit(adapterPosition) }
         }
     }
 

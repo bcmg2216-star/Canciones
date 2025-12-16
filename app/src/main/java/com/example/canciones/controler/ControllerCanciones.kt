@@ -15,4 +15,14 @@ class ControllerCanciones {
         // Borra la canción
         lista.removeIf { it.titulo == titulo }
     }
+
+    // Añado una canción nueva
+    fun addCancion(cancion: Cancion){
+        lista.add(cancion)
+    }
+
+    // Edito una canción
+    fun editCancion(pos: Int, cancionEdit: Cancion){
+        lista[pos] = cancionEdit
+    }
 }

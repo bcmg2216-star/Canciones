@@ -2,42 +2,59 @@ package com.example.canciones
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.example.canciones.adapter.CancionAdapter
-import com.example.canciones.controler.ControllerCanciones
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 
 class MainActivity : AppCompatActivity() {
 
-    private val controller = ControllerCanciones()
-    private lateinit var adapter: CancionAdapter
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        controller.loadData()
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-        val recycler = findViewById<RecyclerView>(R.id.rvCanciones)
-        val fab = findViewById<FloatingActionButton>(R.id.fabAdd)
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
-        recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.fragmentSanti, R.id.cancionesFragment)
+        )
 
-        adapter = CancionAdapter(controller.lista) { pos ->
-            val titulo = controller.lista[pos].titulo
-            controller.deleteCancion(titulo)
-            adapter.updateList(controller.lista)
-            Toast.makeText(this, "Canción borrada", Toast.LENGTH_SHORT).show()
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_santi -> {
+                navController.navigate(R.id.fragmentSanti)
+                true
+            }
+            R.id.action_canciones -> {
+                navController.navigate(R.id.cancionesFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
+    }
 
-        recycler.adapter = adapter
-
-        // Botón flotante
-        fab.setOnClickListener {
-            Toast.makeText(this, "Alta de canción (próximamente)", Toast.LENGTH_SHORT).show()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp()
     }
 }
