@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.canciones.adapter.CancionAdapter
@@ -32,12 +33,16 @@ class CancionesFragment : Fragment(R.layout.fragment_canciones), FormCancionFrag
                 val titulo = controller.lista[pos].titulo
                 controller.deleteCancion(titulo)
                 adapter.updateList(controller.lista)
-                Toast.makeText(context, "Canción borrada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Borrado", Toast.LENGTH_SHORT).show()
             },
             onEdit = { pos ->
                 val cancion = controller.lista[pos]
                 val dialogo = FormCancionFragment.newInstance(cancion, pos)
-                dialogo.show(childFragmentManager, "edit-dialogo")
+                dialogo.show(childFragmentManager, "edit")
+            },
+            onItemClick = { pos ->
+                val action = CancionesFragmentDirections.actionCancionesToDetalle(pos)
+                findNavController().navigate(action)
             }
         )
 
@@ -45,17 +50,17 @@ class CancionesFragment : Fragment(R.layout.fragment_canciones), FormCancionFrag
 
         fab.setOnClickListener {
             val dialogo = FormCancionFragment.newInstance(null, null)
-            dialogo.show(childFragmentManager, "add-dialogo")
+            dialogo.show(childFragmentManager, "add")
         }
     }
 
     override fun onCancionSaved(cancion: Cancion, position: Int?) {
         if (position != null){
             controller.editCancion(position, cancion)
-            Toast.makeText(context, "Canción modificada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Modificado", Toast.LENGTH_SHORT).show()
         } else {
             controller.addCancion(cancion)
-            Toast.makeText(context, "Cancion añadida", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Guardado", Toast.LENGTH_SHORT).show()
         }
         adapter.updateList(controller.lista)
     }

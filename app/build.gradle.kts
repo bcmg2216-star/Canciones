@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt") // ← NECESARIO PARA GLIDE
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {

@@ -14,7 +14,8 @@ import com.example.canciones.models.Cancion
 class CancionAdapter(
     private var lista: MutableList<Cancion>,
     private val onDelete: (Int) -> Unit,
-    private val onEdit: (Int) -> Unit
+    private val onEdit: (Int) -> Unit,
+    private val onItemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<CancionAdapter.CancionVH>() {
 
     inner class CancionVH(v: View) : RecyclerView.ViewHolder(v) {
@@ -27,7 +28,6 @@ class CancionAdapter(
         val btnEdit: Button = v.findViewById(R.id.btnEdit)
 
         fun render(c: Cancion) {
-            // Carga la imagen con Glide
             Glide.with(itemView.context).load(c.imagen).into(img)
             titulo.text = c.titulo
             autor.text = c.autor
@@ -36,6 +36,7 @@ class CancionAdapter(
 
             btnDelete.setOnClickListener { onDelete(adapterPosition) }
             btnEdit.setOnClickListener { onEdit(adapterPosition) }
+            itemView.setOnClickListener { onItemClick(adapterPosition) }
         }
     }
 
@@ -52,7 +53,6 @@ class CancionAdapter(
     override fun getItemCount(): Int = lista.size
 
     fun updateList(newList: MutableList<Cancion>) {
-        // Actualiza la lista y refresca el RecyclerView
         lista = newList
         notifyDataSetChanged()
     }
