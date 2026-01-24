@@ -13,7 +13,7 @@ Permite realizar todas las operaciones de gestión (CRUD) y navegación:
 - **Editar:** Posibilidad de modificar los datos de cualquier canción.
 - **Borrar:** Eliminación directa de canciones de la lista.
 - **Cerrar Sesión:** Opción de Logout en el menú lateral y superior para volver al Login.
-- 
+
 ## Estructura
 * **Navegación:** Uso avanzado de `NavigationComponent` con `DrawerLayout` para el menú lateral. Configuración de destinos Top-Level y uso de `SafeArgs` para pasar la posición al fragmento de detalles.
 * **Arquitectura:** Separación de lógica en dos Activities (`LoginActivity` y `MainActivity`) y uso de **Controlador** (`ControllerCanciones`) y **DAO** (`DaoCanciones`) simulado.
