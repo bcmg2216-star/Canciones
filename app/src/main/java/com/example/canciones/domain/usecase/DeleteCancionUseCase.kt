@@ -1,0 +1,13 @@
+package com.example.canciones.domain.usecase
+
+import com.example.canciones.domain.model.Cancion
+import com.example.canciones.domain.repository.CancionRepository
+import javax.inject.Inject
+
+class DeleteCancionUseCase @Inject constructor(
+    private val repository: CancionRepository
+) {
+    suspend operator fun invoke(cancion: Cancion) {
+        repository.deleteCancion(cancion)
+    }
+}

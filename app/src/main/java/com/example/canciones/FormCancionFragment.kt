@@ -10,7 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.canciones.models.Cancion
+import com.example.canciones.domain.model.Cancion
 
 class FormCancionFragment : DialogFragment() {
 

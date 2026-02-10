@@ -1,7 +1,7 @@
 package com.example.canciones.controler
 
 import com.example.canciones.dao.DaoCanciones
-import com.example.canciones.models.Cancion
+import com.example.canciones.domain.model.Cancion
 
 class ControllerCanciones {
     lateinit var lista: MutableList<Cancion>

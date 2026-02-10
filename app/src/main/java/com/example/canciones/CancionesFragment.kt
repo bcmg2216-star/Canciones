@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.canciones.adapter.CancionAdapter
 import com.example.canciones.controler.ControllerCanciones
-import com.example.canciones.models.Cancion
+import com.example.canciones.domain.model.Cancion
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CancionesFragment : Fragment(R.layout.fragment_canciones), FormCancionFragment.OnCancionSavedListener {
