@@ -7,7 +7,6 @@ import javax.inject.Inject
 class GetCancionesUseCase @Inject constructor(
     private val repository: CancionRepository
 ) {
-    // El operador invoke permite llamar a la clase como si fuera una función
     suspend operator fun invoke(): List<Cancion> {
         return repository.getCanciones()
     }

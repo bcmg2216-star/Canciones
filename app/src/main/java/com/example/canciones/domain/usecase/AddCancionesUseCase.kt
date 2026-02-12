@@ -4,7 +4,7 @@ import com.example.canciones.domain.model.Cancion
 import com.example.canciones.domain.repository.CancionRepository
 import javax.inject.Inject
 
-class AddCancionUseCase @Inject constructor(
+class AddCancionesUseCase @Inject constructor(
     private val repository: CancionRepository
 ) {
     suspend operator fun invoke(cancion: Cancion) {

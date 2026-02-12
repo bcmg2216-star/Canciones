@@ -71,13 +71,11 @@ class FormCancionFragment : DialogFragment() {
             val duracion = etDuracion.text.toString()
 
             if (titulo.isNotEmpty() && autor.isNotEmpty()) {
-                // Si editamos, mantenemos la imagen
-                // Si es nueva, ponemos una por defecto
                 val imagen = cancionEditar?.imagen ?: R.drawable.la_promesa
+                val idFinal = cancionEditar?.id ?: 0
 
-                val cancionFinal = Cancion(titulo, autor, album, duracion, imagen)
+                val cancionFinal = Cancion(idFinal, titulo, autor, album, duracion, imagen)
 
-                // Avisamos al MainActivity
                 listener.onCancionSaved(cancionFinal, posicionEditar)
                 dismiss()
             } else {
@@ -87,19 +85,17 @@ class FormCancionFragment : DialogFragment() {
     }
 
     private fun checkEditMode() {
-        // Recuperamos los argumentos si existen (Modo Edición)
         if (arguments != null && arguments?.containsKey("titulo") == true) {
+            val id = arguments?.getInt("id") ?: 0
             val titulo = arguments?.getString("titulo")
             val autor = arguments?.getString("autor")
             val album = arguments?.getString("album")
             val duracion = arguments?.getString("duracion")
             val imagen = arguments?.getInt("imagen") ?: 0
 
-            // Guardamos la referencia de que estamos editando
-            cancionEditar = Cancion(titulo!!, autor!!, album!!, duracion!!, imagen)
+            cancionEditar = Cancion(id, titulo!!, autor!!, album!!, duracion!!, imagen)
             posicionEditar = arguments?.getInt("posicion")
 
-            // Rellenamos los campos
             tvTitulo.text = "Editar Canción"
             etTitulo.setText(titulo)
             etAutor.setText(autor)
@@ -113,6 +109,7 @@ class FormCancionFragment : DialogFragment() {
             val fragment = FormCancionFragment()
             val args = Bundle()
             if (cancion != null && position != null) {
+                args.putInt("id", cancion.id)
                 args.putString("titulo", cancion.titulo)
                 args.putString("autor", cancion.autor)
                 args.putString("album", cancion.album)

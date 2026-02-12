@@ -16,8 +16,5 @@ data class CancionEntity(
     @ColumnInfo(name = "imagen") val imagen: Int
 )
 
-// Función de extensión para pasar de Entity a Modelo de dominio
 fun CancionEntity.toDomain() = Cancion(id, titulo, autor, album, duracion, imagen)
-
-// Función de extensión para pasar de Modelo de dominio a Entity
 fun Cancion.toEntity() = CancionEntity(id, titulo, autor, album, duracion, imagen)

@@ -12,12 +12,10 @@ class CancionRepositoryImpl @Inject constructor(
 ) : CancionRepository {
 
     override suspend fun getCanciones(): List<Cancion> {
-        // Obtenemos Entities de la BBDD y las convertimos a Domain
         return dao.getCanciones().map { it.toDomain() }
     }
 
     override suspend fun insertCancion(cancion: Cancion) {
-        // Convertimos Domain a Entity y guardamos
         dao.insertCancion(cancion.toEntity())
     }
 

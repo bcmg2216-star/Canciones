@@ -1,5 +1,6 @@
 package com.example.canciones
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -15,7 +16,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -44,15 +47,24 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        // Mostramos el nombre del usuario en la cabecera del menú
         val user = intent.getStringExtra("USER_NAME") ?: "Usuario"
         val headerView = navView.getHeaderView(0)
         val tvUser = headerView.findViewById<TextView>(R.id.tvHeaderUser)
         tvUser.text = user
 
         navView.menu.findItem(R.id.nav_logout).setOnMenuItemClickListener {
+
+            // 1. Borramos el archivo de preferencias donde guardamos el login
+            val sharedPref = getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE)
+            val editor = sharedPref.edit()
+            editor.clear() // Borra todo
+            editor.apply() // Confirma el borrado
+
+            // 2. Volvemos a la pantalla de Login
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            finish()
+            finish() // Cerramos el Main para no poder volver atrás
             true
         }
     }

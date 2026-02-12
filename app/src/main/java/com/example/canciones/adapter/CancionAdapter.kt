@@ -12,7 +12,7 @@ import com.example.canciones.R
 import com.example.canciones.domain.model.Cancion
 
 class CancionAdapter(
-    private var lista: MutableList<Cancion>,
+    var lista: MutableList<Cancion>,
     private val onDelete: (Int) -> Unit,
     private val onEdit: (Int) -> Unit,
     private val onItemClick: (Int) -> Unit
